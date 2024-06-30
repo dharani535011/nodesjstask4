@@ -1,0 +1,16 @@
+const express =require("express")
+const mongoose=require("mongoose")
+const cors=require("cors")
+const cookiparser=require("cookie-parser")
+const { MONGODBURL, PORT } = require("./config/Mongodb")
+const Userroute = require("./routes/userrouter")
+const app=express()
+app.use(express.json())
+app.use(cookiparser())
+app.use(cors({ origin: true, credentials: true }));
+app.use("/user",Userroute)
+mongoose.connect(MONGODBURL)
+.then(()=>{
+    console.log("mongodb")
+    app.listen(PORT)
+})
