@@ -99,12 +99,15 @@ const usercontroller={
     resetpassword:async(req,res)=>{
         try{
              const {otp,password,repass}=req.body
+             if(!otp||!password||!repass){
+                return res.send({message:"fill all inputs properly"})
+             }
              const user=await User.findOne({randomstring:otp})
              if(!user){
                return res.send({message:"worng OTP"})
              }
              if(password!==repass){
-                return res.send({message:"enter the same password in confrim password"})
+                return res.send({message:"enter the same password in inputs"})
              }
 
              const newpass=await bcrypt.hash(password,10)
